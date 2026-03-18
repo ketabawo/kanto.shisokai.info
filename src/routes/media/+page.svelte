@@ -1,17 +1,17 @@
 <svelte:head>
-  <title>メディア掲載 | 始祖会 Kanto Owners Meeting</title>
-  <meta name="description" content="始祖会 Kanto Owners Meeting のメディア掲載実績をご紹介します。雑誌等での取材・掲載情報をまとめています。">
+  <title>メディア掲載 | 始祖会 GPZ1000RX・ZX-10 オーナーズミーティング</title>
+  <meta name="description" content="GPZ1000RX・ZX-10オーナーズミーティング「始祖会」のメディア掲載実績。雑誌等での取材・掲載情報をまとめています。">
   <link rel="canonical" href="https://kanto.shisokai.info/media/">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://kanto.shisokai.info/media/">
-  <meta property="og:title" content="メディア掲載 | 始祖会 Kanto Owners Meeting">
-  <meta property="og:description" content="始祖会 Kanto Owners Meeting のメディア掲載実績をご紹介します。雑誌等での取材・掲載情報をまとめています。">
+  <meta property="og:title" content="メディア掲載 | 始祖会 GPZ1000RX・ZX-10 オーナーズミーティング">
+  <meta property="og:description" content="GPZ1000RX・ZX-10オーナーズミーティング「始祖会」のメディア掲載実績。雑誌等での取材・掲載情報をまとめています。">
   <meta property="og:image" content="https://kanto.shisokai.info/images/OGP.png">
   <meta property="og:site_name" content="始祖会 Kanto Owners Meeting">
   <meta property="og:locale" content="ja_JP">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="メディア掲載 | 始祖会 Kanto Owners Meeting">
-  <meta name="twitter:description" content="始祖会 Kanto Owners Meeting のメディア掲載実績をご紹介します。雑誌等での取材・掲載情報をまとめています。">
+  <meta name="twitter:title" content="メディア掲載 | 始祖会 GPZ1000RX・ZX-10 オーナーズミーティング">
+  <meta name="twitter:description" content="GPZ1000RX・ZX-10オーナーズミーティング「始祖会」のメディア掲載実績。雑誌等での取材・掲載情報をまとめています。">
   <meta name="twitter:image" content="https://kanto.shisokai.info/images/OGP.png">
 </svelte:head>
 

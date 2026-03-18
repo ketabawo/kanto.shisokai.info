@@ -1,17 +1,17 @@
 <svelte:head>
-  <title>参加者の声 | 始祖会 Kanto Owners Meeting</title>
-  <meta name="description" content="始祖会 Kanto Owners Meeting に参加された方々からいただいた感想やコメントをご紹介します。">
+  <title>参加者の声 | 始祖会 GPZ1000RX・ZX-10 オーナーズミーティング</title>
+  <meta name="description" content="GPZ1000RX・ZX-10オーナーズミーティング「始祖会」に参加された方々の感想やコメントをご紹介。関東圏で開催されるオフ会の雰囲気をお伝えします。">
   <link rel="canonical" href="https://kanto.shisokai.info/voices/">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://kanto.shisokai.info/voices/">
-  <meta property="og:title" content="参加者の声 | 始祖会 Kanto Owners Meeting">
-  <meta property="og:description" content="始祖会 Kanto Owners Meeting に参加された方々からいただいた感想やコメントをご紹介します。">
+  <meta property="og:title" content="参加者の声 | 始祖会 GPZ1000RX・ZX-10 オーナーズミーティング">
+  <meta property="og:description" content="GPZ1000RX・ZX-10オーナーズミーティング「始祖会」に参加された方々の感想やコメントをご紹介。関東圏で開催されるオフ会の雰囲気をお伝えします。">
   <meta property="og:image" content="https://kanto.shisokai.info/images/OGP.png">
   <meta property="og:site_name" content="始祖会 Kanto Owners Meeting">
   <meta property="og:locale" content="ja_JP">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="参加者の声 | 始祖会 Kanto Owners Meeting">
-  <meta name="twitter:description" content="始祖会 Kanto Owners Meeting に参加された方々からいただいた感想やコメントをご紹介します。">
+  <meta name="twitter:title" content="参加者の声 | 始祖会 GPZ1000RX・ZX-10 オーナーズミーティング">
+  <meta name="twitter:description" content="GPZ1000RX・ZX-10オーナーズミーティング「始祖会」に参加された方々の感想やコメントをご紹介。関東圏で開催されるオフ会の雰囲気をお伝えします。">
   <meta name="twitter:image" content="https://kanto.shisokai.info/images/OGP.png">
 </svelte:head>
 

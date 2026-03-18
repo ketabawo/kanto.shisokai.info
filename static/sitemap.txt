@@ -1,3 +1,6 @@
 https://kanto.shisokai.info/
-https://kanto.shisokai.info/about
-https://kanto.shisokai.info/contact
+https://kanto.shisokai.info/about/
+https://kanto.shisokai.info/voices/
+https://kanto.shisokai.info/media/
+https://kanto.shisokai.info/faqs/
+https://kanto.shisokai.info/contact/

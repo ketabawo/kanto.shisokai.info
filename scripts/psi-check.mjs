@@ -16,16 +16,28 @@ const BASE_URL = 'https://kanto.shisokai.info';
 const PATHS = ['/', '/about/', '/voices/', '/media/', '/faqs/', '/contact/'];
 const PAGES = PATHS.map(p => ({ name: p, url: `${BASE_URL}${p}` }));
 
-// Usage: node psi-check.mjs [mobile|desktop] [--details] [/path ...]
+// Usage: node psi-check.mjs [mobile|desktop] [--details] [/path ... | https://...]
 const args = process.argv.slice(2);
 const strategy = (args[0] === 'mobile' || args[0] === 'desktop') ? args.shift() : 'mobile';
 const showDetails = args.includes('--details');
-const pageFilter = args.filter(a => a !== '--details').map(a => a.toLowerCase());
+const restArgs = args.filter(a => a !== '--details');
+
+const externalUrls = restArgs.filter(a => /^https?:\/\//.test(a));
+const pageFilter = restArgs.filter(a => !/^https?:\/\//.test(a)).map(a => a.toLowerCase());
 
 const normalize = (s) => s === '/' ? '/' : s.replace(/\/+$/, '');
-const pages = pageFilter.length > 0
-  ? PAGES.filter(p => pageFilter.some(f => normalize(p.name) === normalize(f)))
-  : PAGES;
+
+let pages;
+if (externalUrls.length > 0) {
+  pages = externalUrls.map(url => {
+    const u = new URL(url);
+    return { name: u.pathname || '/', url };
+  });
+} else if (pageFilter.length > 0) {
+  pages = PAGES.filter(p => pageFilter.some(f => normalize(p.name) === normalize(f)));
+} else {
+  pages = PAGES;
+}
 
 if (pages.length === 0) {
   console.error(`Page not found. Available: ${PATHS.join(', ')}`);

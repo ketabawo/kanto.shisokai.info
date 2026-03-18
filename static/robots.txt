@@ -2,3 +2,4 @@ User-agent: *
 Allow: /
 
 Sitemap: https://kanto.shisokai.info/sitemap.xml
+Sitemap: https://kanto.shisokai.info/sitemap.txt

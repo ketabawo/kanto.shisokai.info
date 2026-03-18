@@ -125,18 +125,18 @@
 </script>
 
 <svelte:head>
-  <title>お問い合わせ | 始祖会 Kanto Owners Meeting</title>
+  <title>お問い合わせ | 始祖会 GPZ1000RX・ZX-10 オーナーズミーティング</title>
   <meta name="description" content="始祖会Kanto Owners Meetingへのお問い合わせページ。GPZ1000RX・ZX-10オーナーズミーティングに関するご質問・ご要望はこちらから。">
   <link rel="canonical" href="https://kanto.shisokai.info/contact/">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://kanto.shisokai.info/contact/">
-  <meta property="og:title" content="お問い合わせ | 始祖会 Kanto Owners Meeting">
+  <meta property="og:title" content="お問い合わせ | 始祖会 GPZ1000RX・ZX-10 オーナーズミーティング">
   <meta property="og:description" content="始祖会Kanto Owners Meetingへのお問い合わせページ。GPZ1000RX・ZX-10オーナーズミーティングに関するご質問・ご要望はこちらから。">
   <meta property="og:image" content="https://kanto.shisokai.info/images/OGP.png">
   <meta property="og:site_name" content="始祖会 Kanto Owners Meeting">
   <meta property="og:locale" content="ja_JP">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="お問い合わせ | 始祖会 Kanto Owners Meeting">
+  <meta name="twitter:title" content="お問い合わせ | 始祖会 GPZ1000RX・ZX-10 オーナーズミーティング">
   <meta name="twitter:description" content="始祖会Kanto Owners Meetingへのお問い合わせページ。GPZ1000RX・ZX-10オーナーズミーティングに関するご質問・ご要望はこちらから。">
   <meta name="twitter:image" content="https://kanto.shisokai.info/images/OGP.png">
   {@html `<script type="application/ld+json">${JSON.stringify({

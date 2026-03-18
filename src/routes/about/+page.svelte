@@ -2,18 +2,18 @@
 </script>
 
 <svelte:head>
-  <title>主宰について | 始祖会 Kanto Owners Meeting</title>
+  <title>主宰について | 始祖会 GPZ1000RX・ZX-10 オーナーズミーティング</title>
   <meta name="description" content="始祖会関東主宰 ketabawo の紹介ページ。GPZ1000RX（ZXT00A/鯨）とZX-10（ZXT00B/鯱）オーナーズミーティングを運営。">
   <link rel="canonical" href="https://kanto.shisokai.info/about/">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://kanto.shisokai.info/about/">
-  <meta property="og:title" content="主宰について | 始祖会 Kanto Owners Meeting">
+  <meta property="og:title" content="主宰について | 始祖会 GPZ1000RX・ZX-10 オーナーズミーティング">
   <meta property="og:description" content="始祖会関東主宰 ketabawo の紹介ページ。GPZ1000RX（ZXT00A/鯨）とZX-10（ZXT00B/鯱）オーナーズミーティングを運営。">
   <meta property="og:image" content="https://kanto.shisokai.info/images/OGP.png">
   <meta property="og:site_name" content="始祖会 Kanto Owners Meeting">
   <meta property="og:locale" content="ja_JP">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="主宰について | 始祖会 Kanto Owners Meeting">
+  <meta name="twitter:title" content="主宰について | 始祖会 GPZ1000RX・ZX-10 オーナーズミーティング">
   <meta name="twitter:description" content="始祖会関東主宰 ketabawo の紹介ページ。GPZ1000RX（ZXT00A/鯨）とZX-10（ZXT00B/鯱）オーナーズミーティングを運営。">
   <meta name="twitter:image" content="https://kanto.shisokai.info/images/OGP.png">
   {@html `<script type="application/ld+json">${JSON.stringify({

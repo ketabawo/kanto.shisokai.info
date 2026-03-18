@@ -2,12 +2,8 @@
   import { onMount } from 'svelte';
   import UserStatisticsChart from '$lib/UserStatisticsChart.svelte';
 
-  // ビルド時刻を取得
-  const buildTime = new Date().toLocaleDateString('ja-JP', {
-    year: 'numeric',
-    month: '2-digit',
-    day: '2-digit'
-  }).replace(/\//g, '.');
+  // ビルド時に埋め込まれた日付
+  const buildTime = __BUILD_DATE__;
 
   // Type assertions for window globals
 
@@ -568,15 +564,15 @@
           </div>
 
           <div class="formGroup">
-            <label for="entryHandleName">ハンドルネーム</label>
-            <input 
-              type="text" 
-              id="entryHandleName" 
+            <label for="entryHandleName">HNまたはInstagramアカウント名</label>
+            <input
+              type="text"
+              id="entryHandleName"
               bind:value={entryForm.handleName}
               disabled={isSubmitting}
-              placeholder="シャチ太郎"
+              placeholder="シャチ太郎 or zx10.ketabawo"
             />
-            <p class="fieldNote">※こちらを入力するとお名前ではなくハンドルネームで表示されます。<br>※主宰がInstagramアカウントを知っている場合はアカウント名を勝手に表示します。</p>
+            <p class="fieldNote">※ブログの参加者名がハンドルネームまたはInstagramアカウント名で表示されます。</p>
           </div>
 
           <div class="formGroup">
@@ -2296,6 +2292,14 @@
   .entryForm textarea {
     resize: vertical;
     min-height: 80px;
+  }
+
+  .entryForm select#entryPrefecture {
+    max-width: 240px;
+  }
+
+  .entryForm input#entryCompanions {
+    max-width: 100px;
   }
 
   .fieldNote {

@@ -1,0 +1,53 @@
+name: Weekly PSI Report
+
+on:
+  schedule:
+    - cron: '0 15 * * 6'  # Every Sunday 0:00 JST (Saturday 15:00 UTC)
+  workflow_dispatch:  # Manual trigger
+
+jobs:
+  psi-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Create .env.local
+        run: echo "PSI_API_KEY=${{ secrets.PSI_API_KEY }}" > .env.local
+
+      - name: Run PSI Check (Mobile)
+        run: node scripts/psi-check.mjs mobile > mobile-result.txt 2>&1
+
+      - name: Run PSI Check (Desktop)
+        run: node scripts/psi-check.mjs desktop > desktop-result.txt 2>&1
+
+      - name: Build email body
+        run: |
+          DATE=$(TZ=Asia/Tokyo date '+%Y-%m-%d %H:%M JST')
+          {
+            echo "Weekly PSI Report for kanto.shisokai.info"
+            echo "Generated: ${DATE}"
+            echo "================================================"
+            echo ""
+            cat mobile-result.txt
+            echo ""
+            echo "================================================"
+            echo ""
+            cat desktop-result.txt
+          } > email-body.txt
+
+      - name: Send Report Email
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: smtp.gmail.com
+          server_port: 465
+          secure: true
+          username: ${{ secrets.GMAIL_ADDRESS }}
+          password: ${{ secrets.GMAIL_APP_PASSWORD }}
+          subject: "[PSI] Weekly Report - kanto.shisokai.info"
+          to: ${{ secrets.GMAIL_ADDRESS }}
+          from: ${{ secrets.GMAIL_ADDRESS }}
+          body: file://email-body.txt
