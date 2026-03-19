@@ -131,6 +131,10 @@
           <span class="navMenu__icon material-icons">help_outline</span>
           <span class="navMenu__text">よくある質問</span>
         </a></li>
+        <li class="navMenu__item"><a href="/history" class="navMenu__link" class:navMenu__link--active={$page.url.pathname.startsWith('/history')} on:click={closeMenu}>
+          <span class="navMenu__icon material-icons">history</span>
+          <span class="navMenu__text">開催履歴</span>
+        </a></li>
         <li class="navMenu__item"><a href="/contact" class="navMenu__link" class:navMenu__link--active={$page.url.pathname === '/contact'} on:click={closeMenu}>
           <span class="navMenu__icon material-icons">mail</span>
           <span class="navMenu__text">お問い合わせ</span>
@@ -280,6 +284,7 @@
         <li><a href="/">始祖会TOP</a></li>
         <li><a href="/about">主宰について</a></li>
         <li><a href="/voices">参加者の声</a></li>
+        <li><a href="/history">開催履歴</a></li>
         <li><a href="/media">メディア掲載</a></li>
         <li><a href="/faqs">よくある質問</a></li>
         <li><a href="/contact">お問い合わせ</a></li>

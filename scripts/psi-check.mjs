@@ -13,7 +13,7 @@ if (!API_KEY) {
 }
 
 const BASE_URL = 'https://kanto.shisokai.info';
-const PATHS = ['/', '/about/', '/voices/', '/media/', '/faqs/', '/contact/'];
+const PATHS = ['/', '/about/', '/voices/', '/media/', '/faqs/', '/contact/', '/history/', '/history/1st/', '/history/2nd/', '/history/3rd/', '/history/4th/'];
 const PAGES = PATHS.map(p => ({ name: p, url: `${BASE_URL}${p}` }));
 
 // Usage: node psi-check.mjs [mobile|desktop] [--details] [/path ... | https://...]
