@@ -11,7 +11,8 @@
     "prepare": "svelte-kit sync || echo ''",
     "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
     "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
-    "checkpsi": "node scripts/psi-check.mjs"
+    "checkpsi": "node scripts/psi-check.mjs",
+    "deploywww": "./deploywww.sh"
   },
   "devDependencies": {
     "@sveltejs/adapter-auto": "^6.0.0",
