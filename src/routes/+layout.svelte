@@ -6,7 +6,7 @@
 
   let isMenuOpen = false;
   let showSponsorModal = false;
-  let showEntryModal = false;
+
   let countdownText = '';
   let showFloatingButton = false;
 
@@ -27,8 +27,6 @@
   }
 
   function showFloatingEntryModal() {
-    showEntryModal = true;
-    // カスタムイベントを発火してメインページの関数を呼び出す
     window.dispatchEvent(new CustomEvent('openEntryModal'));
   }
 
@@ -62,8 +60,8 @@
 
 
     // スクロール監視でフローティングボタンの表示制御
+    const featuresSection = document.querySelector('.featuresGrid');
     function handleScroll() {
-      const featuresSection = document.querySelector('.featuresGrid');
       if (featuresSection && featuresSection instanceof HTMLElement) {
         const featureTop = featuresSection.offsetTop;
         const scrollY = window.scrollY || window.pageYOffset;
@@ -115,27 +113,27 @@
           <span class="navMenu__icon material-icons">home</span>
           <span class="navMenu__text">ホーム</span>
         </a></li>
-        <li class="navMenu__item"><a href="/about" class="navMenu__link" class:navMenu__link--active={$page.url.pathname === '/about'} on:click={closeMenu}>
+        <li class="navMenu__item"><a href="/about/" class="navMenu__link" class:navMenu__link--active={$page.url.pathname === '/about/'} on:click={closeMenu}>
           <span class="navMenu__icon material-icons">person</span>
           <span class="navMenu__text">主宰について</span>
         </a></li>
-        <li class="navMenu__item"><a href="/voices" class="navMenu__link" class:navMenu__link--active={$page.url.pathname === '/voices'} on:click={closeMenu}>
+        <li class="navMenu__item"><a href="/voices/" class="navMenu__link" class:navMenu__link--active={$page.url.pathname === '/voices/'} on:click={closeMenu}>
           <span class="navMenu__icon material-icons">forum</span>
           <span class="navMenu__text">参加者の声</span>
         </a></li>
-        <li class="navMenu__item"><a href="/media" class="navMenu__link" class:navMenu__link--active={$page.url.pathname === '/media'} on:click={closeMenu}>
+        <li class="navMenu__item"><a href="/media/" class="navMenu__link" class:navMenu__link--active={$page.url.pathname === '/media/'} on:click={closeMenu}>
           <span class="navMenu__icon material-icons">article</span>
           <span class="navMenu__text">メディア掲載</span>
         </a></li>
-        <li class="navMenu__item"><a href="/faqs" class="navMenu__link" class:navMenu__link--active={$page.url.pathname === '/faqs'} on:click={closeMenu}>
+        <li class="navMenu__item"><a href="/faqs/" class="navMenu__link" class:navMenu__link--active={$page.url.pathname === '/faqs/'} on:click={closeMenu}>
           <span class="navMenu__icon material-icons">help_outline</span>
           <span class="navMenu__text">よくある質問</span>
         </a></li>
-        <li class="navMenu__item"><a href="/history" class="navMenu__link" class:navMenu__link--active={$page.url.pathname.startsWith('/history')} on:click={closeMenu}>
+        <li class="navMenu__item"><a href="/history/" class="navMenu__link" class:navMenu__link--active={$page.url.pathname.startsWith('/history/')} on:click={closeMenu}>
           <span class="navMenu__icon material-icons">history</span>
           <span class="navMenu__text">開催履歴</span>
         </a></li>
-        <li class="navMenu__item"><a href="/contact" class="navMenu__link" class:navMenu__link--active={$page.url.pathname === '/contact'} on:click={closeMenu}>
+        <li class="navMenu__item"><a href="/contact/" class="navMenu__link" class:navMenu__link--active={$page.url.pathname === '/contact/'} on:click={closeMenu}>
           <span class="navMenu__icon material-icons">mail</span>
           <span class="navMenu__text">お問い合わせ</span>
         </a></li>
@@ -209,7 +207,7 @@
       <div class="modalBody">
         <p>始祖会 Kanto Owners Meeting では、掲載バナーを募集しています。</p>
         <p>バイク関連ショップ、パーツメーカー、その他関連企業様のバナー掲載をお待ちしております。</p>
-        <p>お手数ですが<a href="/contact">お問い合わせ</a>よりご連絡お願いいたします。</p>
+        <p>お手数ですが<a href="/contact/">お問い合わせ</a>よりご連絡お願いいたします。</p>
       </div>
     </div>
   </div>
@@ -282,12 +280,12 @@
     <nav class="footerNav">
       <ul class="footerNav__list">
         <li><a href="/">始祖会TOP</a></li>
-        <li><a href="/about">主宰について</a></li>
-        <li><a href="/voices">参加者の声</a></li>
-        <li><a href="/history">開催履歴</a></li>
-        <li><a href="/media">メディア掲載</a></li>
-        <li><a href="/faqs">よくある質問</a></li>
-        <li><a href="/contact">お問い合わせ</a></li>
+        <li><a href="/about/">主宰について</a></li>
+        <li><a href="/voices/">参加者の声</a></li>
+        <li><a href="/history/">開催履歴</a></li>
+        <li><a href="/media/">メディア掲載</a></li>
+        <li><a href="/faqs/">よくある質問</a></li>
+        <li><a href="/contact/">お問い合わせ</a></li>
       </ul>
     </nav>
 

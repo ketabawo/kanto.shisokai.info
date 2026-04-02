@@ -40,10 +40,14 @@
 <section class="section">
   <div class="container">
     <div class="eventImageArea">
-      <div class="noImage">
-        <span class="material-icons">photo_camera</span>
-        <span>No Image</span>
-      </div>
+      {#if event.detailImage}
+        <img src={event.detailImage} alt={event.name} width="1600" height="1067">
+      {:else}
+        <div class="noImage">
+          <span class="material-icons">photo_camera</span>
+          <span>No Image</span>
+        </div>
+      {/if}
     </div>
 
     <div class="membersSection">
@@ -163,6 +167,12 @@
     overflow: hidden;
   }
 
+  .eventImageArea img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
   .noImage {
     width: 100%;
     height: 100%;
@@ -171,7 +181,7 @@
     align-items: center;
     justify-content: center;
     gap: 8px;
-    color: #aaa;
+    color: #5e5e5e;
     font-size: 0.9rem;
   }
 
@@ -206,13 +216,13 @@
   .groupTitle {
     font-size: 1.1rem;
     font-weight: bold;
-    color: #eb1000;
+    color: #c00000;
     margin: 0 0 16px 0;
   }
 
   .groupCount {
     font-size: 0.9rem;
-    color: #999;
+    color: #767676;
     font-weight: normal;
   }
 
@@ -247,7 +257,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #ccc;
+    color: #595959;
   }
 
   .noPhoto .material-icons {
@@ -280,7 +290,7 @@
 
   .memberPref {
     font-size: 0.75rem;
-    color: #999;
+    color: #767676;
     white-space: nowrap;
     flex-shrink: 0;
     margin-left: 8px;

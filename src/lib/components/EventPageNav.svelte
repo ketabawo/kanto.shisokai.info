@@ -79,7 +79,9 @@
 
   .navItem.cancelled {
     text-decoration: line-through;
-    opacity: 0.5;
+    color: #aaa;
+    border-color: #ddd;
+    pointer-events: none;
   }
 
   .navItem.active.cancelled {

@@ -72,7 +72,7 @@
 
       <div class="faqItem">
         <h2 class="faqQuestion"><span class="material-icons">quiz</span>取材について</h2>
-        <p class="faqAnswer">雑誌やYoutube等のメディア取材は大歓迎ですので、お手数ですが<a href="/contact">お問い合わせ</a>よりご連絡お願いいたします。</p>
+        <p class="faqAnswer">雑誌やYoutube等のメディア取材は大歓迎ですので、お手数ですが<a href="/contact/">お問い合わせ</a>よりご連絡お願いいたします。</p>
       </div>
     </div>
 

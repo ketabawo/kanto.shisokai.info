@@ -953,7 +953,7 @@
     </div>
 
     <div class="showMoreContainer">
-      <a href="/voices" class="showMoreButton">
+      <a href="/voices/" class="showMoreButton">
         <span class="material-icons">expand_more</span>
         もっと見る
       </a>
@@ -984,7 +984,7 @@
     </div>
 
     <div class="showMoreContainer">
-      <a href="/faqs" class="showMoreButton">
+      <a href="/faqs/" class="showMoreButton">
         <span class="material-icons">expand_more</span>
         もっと見る (7件)
       </a>

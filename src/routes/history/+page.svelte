@@ -121,8 +121,8 @@
   }
 
   .eventCard.cancelled {
-    opacity: 0.6;
     cursor: default;
+    filter: grayscale(0.6);
   }
 
   .eventImage {
@@ -146,7 +146,7 @@
     align-items: center;
     justify-content: center;
     gap: 8px;
-    color: #aaa;
+    color: #5e5e5e;
     font-size: 0.85rem;
   }
 
@@ -173,7 +173,7 @@
   .eventId {
     font-size: 0.75rem;
     font-weight: bold;
-    color: #eb1000;
+    color: #c00000;
     letter-spacing: 0.1em;
     margin: 0 0 6px 0;
     font-family: Arial, sans-serif;
@@ -198,7 +198,7 @@
 
   .eventMeta .material-icons {
     font-size: 1rem;
-    color: #999;
+    color: #767676;
   }
 
   @media (max-width: 767px) {

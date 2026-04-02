@@ -51,7 +51,7 @@
 
     <div class="mediaCta">
       <h2 class="mediaCtaTitle">取材について</h2>
-      <p>雑誌社等の法人さまに限らず個人YouTuberさまの動画取材も大歓迎です。<br>ご希望される場合は<a href="/contact">お問い合わせ</a>より一報いただけると幸いです。</p>
+      <p>雑誌社等の法人さまに限らず個人YouTuberさまの動画取材も大歓迎です。<br>ご希望される場合は<a href="/contact/">お問い合わせ</a>より一報いただけると幸いです。</p>
     </div>
 
     <div class="backLinkContainer">
