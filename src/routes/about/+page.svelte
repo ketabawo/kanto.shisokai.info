@@ -118,7 +118,7 @@
               </a>
             </li>
             <li>
-              <a href="http://meatloversonly.jp/" target="_blank" rel="noopener noreferrer" class="url-link">
+              <a href="https://meatloversonly.jp/" target="_blank" rel="noopener noreferrer" class="url-link">
                 meatloversonly.jp
               </a>
             </li>

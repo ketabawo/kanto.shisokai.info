@@ -48,4 +48,12 @@ export const events: Event[] = [
     location: 'ライダーズベースリバティ',
     cancelled: true,
   },
+  {
+    id: '6th',
+    name: '始祖会 Kanto Owners Meeting 2026 side-A',
+    date: '2026/05/10',
+    location: 'ライダーズベースリバティ',
+    image: '/images/history/2026/index-card-a.webp',
+    detailImage: '/images/history/2026/detail-a.webp',
+  },
 ];

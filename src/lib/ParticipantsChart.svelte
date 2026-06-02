@@ -11,11 +11,11 @@
 
   // 参加者数データ（実際のデータ）
   const participantData = {
-    labels: ['鯨x鯱2023', '2024 Side-A', '2024 Side-B', '2025 Side-A'],
+    labels: ['鯨x鯱2023', '2024 Side-A', '2024 Side-B', '2025 Side-A', '2026 Side-A'],
     datasets: [
       {
         label: 'GPZ1000RX',
-        data: [7, 12, 11, 10],
+        data: [7, 12, 11, 10, 12],
         borderColor: '#eb1000',
         backgroundColor: 'rgba(235, 16, 0, 0.1)',
         borderWidth: 3,
@@ -29,7 +29,7 @@
       },
       {
         label: 'ZX-10',
-        data: [16, 14, 18, 17],
+        data: [16, 14, 17, 16, 17],
         borderColor: '#333',
         backgroundColor: 'rgba(51, 51, 51, 0.1)',
         borderWidth: 3,

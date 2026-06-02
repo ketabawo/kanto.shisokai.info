@@ -7,6 +7,9 @@
   let isMenuOpen = false;
   let showSponsorModal = false;
 
+  // 募集の受付状態（false = 募集終了、true = 受付中）
+  const ENTRY_OPEN = true;
+
   let countdownText = '';
   let showFloatingButton = false;
 
@@ -31,7 +34,7 @@
   }
 
   function updateCountdown() {
-    const deadline = new Date('2026-05-10T06:00:00+09:00'); // 2026年5月10日 朝6時（JST）
+    const deadline = new Date('2026-11-01T06:00:00+09:00'); // 2026年11月1日 朝6時（JST）
     const now = new Date();
     const diff = deadline.getTime() - now.getTime();
 
@@ -147,7 +150,7 @@
 </main>
 
 <!-- フローティング参加表明ボタンとカウントダウン（ホームページでfeatures以降に表示） -->
-{#if $page.url.pathname === '/' && showFloatingButton}
+{#if ENTRY_OPEN && $page.url.pathname === '/' && showFloatingButton}
 <div class="floatingContainer" transition:fly="{{ y: 50, duration: 400 }}">
   <!-- カウントダウン吹き出し -->
   {#if countdownText}
@@ -219,7 +222,7 @@
       <div class="shareButtons">
         <!-- X (Twitter) -->
         <a
-          href="https://twitter.com/intent/tweet?text={encodeURIComponent('始祖会 Kanto Owners Meeting 2026 Side-A\nGPZ1000RX & ZX-10オーナーズミーティング\n2026年5月10日(日) 9:00-11:00\n')}&url={encodeURIComponent('https://kanto.shisokai.info')}&hashtags={encodeURIComponent('始祖会,GPZ1000RX,ZX10,バイク')}"
+          href="https://twitter.com/intent/tweet?text={encodeURIComponent('始祖会 Kanto Owners Meeting 2026 Side-B\nGPZ1000RX & ZX-10オーナーズミーティング\n2026年11月1日(日) 9:00-11:00\n')}&url={encodeURIComponent('https://kanto.shisokai.info')}&hashtags={encodeURIComponent('始祖会,GPZ1000RX,ZX10,バイク')}"
           target="_blank"
           rel="noopener noreferrer"
           class="shareButton shareX"
@@ -235,7 +238,7 @@
           on:click={() => {
             navigator.share ? 
               navigator.share({
-                title: '始祖会 Kanto Owners Meeting 2026 Side-A',
+                title: '始祖会 Kanto Owners Meeting 2026 Side-B',
                 text: 'GPZ1000RX & ZX-10オーナーズミーティング',
                 url: 'https://kanto.shisokai.info'
               }) :

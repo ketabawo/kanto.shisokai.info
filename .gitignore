@@ -32,3 +32,8 @@ vite.config.ts.timestamp-*
 .worktrees/
 .security-key
 logs/security/
+
+# Claude Code / agent tooling artifacts
+.agents/
+.claude/skills/
+skills-lock.json

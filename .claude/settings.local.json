@@ -11,8 +11,34 @@
       "WebFetch(domain:www.xml-sitemaps.com)",
       "Bash(source:*)",
       "Bash(lftp:*)",
-      "Bash(./deploy.sh)"
+      "Bash(./deploy.sh)",
+      "Bash(sips -g pixelWidth -g pixelHeight /Users/takuobatake/Downloads/shisokai-instagram-logo.webp)",
+      "Bash(xargs -I {} sh -c 'sips -g pixelWidth -g pixelHeight \"{}\" 2>/dev/null | grep -A1 pixelWidth | head -3 | tr \"\\\\n\" \" \"; echo \"{}\"')",
+      "Bash(\"/Applications/Google Chrome.app/Contents/MacOS/Google Chrome\" --headless --disable-gpu --hide-scrollbars --window-size=1080,1080 --screenshot=/Users/takuobatake/Downloads/shisokai-instagram-promo.png /Users/takuobatake/Downloads/shisokai-instagram-promo.html)",
+      "Bash(awk 'NR>=1000 && /^<\\\\/section>/{print NR\": \"$0; exit}' /Users/takuobatake/Sites/mysites/shisokai/src/routes/+page.svelte)",
+      "Bash(curl -s \"https://www.google.com/search?q=site%3Akanto.shisokai.info\" -A \"Mozilla/5.0 \\(Macintosh; Intel Mac OS X 10_15_7\\) AppleWebKit/537.36 \\(KHTML, like Gecko\\) Chrome/120.0.0.0 Safari/537.36\" -o /tmp/google_search.html && grep -o \"に一致する情報は見つかりませんでした\\\\|did not match any documents\\\\|該当する結果は\\\\|About [0-9,]* result\\\\|約 [0-9,]* 件\" /tmp/google_search.html | head -5)",
+      "Read(//tmp/**)",
+      "Bash(whois shisokai.info)",
+      "Bash(python3 -m json.tool)",
+      "Bash(dig shisokai.info +short)",
+      "Bash(dig www.shisokai.info +short)",
+      "Bash(dig kanto.shisokai.info +short)",
+      "Bash(grep -v \"^$\")",
+      "Bash(python3 -c ' *)",
+      "Bash(dig shisokai.info CAA +short)",
+      "Bash(dig www.shisokai.info CAA +short)",
+      "Bash(openssl s_client -servername shisokai.info -connect shisokai.info:443)",
+      "Bash(openssl x509 *)",
+      "Bash(./deploywww.sh)",
+      "WebFetch(domain:kanto.shisokai.info)",
+      "WebFetch(domain:www.shisokai.info)",
+      "Bash(grep -oE '2026[年/-]?[0-9]{1,2}[月/-]?[0-9]{0,2}[日]?[^<]{0,30}')",
+      "WebSearch"
     ],
-    "deny": []
+    "deny": [],
+    "additionalDirectories": [
+      "/Users/takuobatake/Sites/mysites/shisokai/static/images",
+      "/Users/takuobatake/Downloads"
+    ]
   }
 }

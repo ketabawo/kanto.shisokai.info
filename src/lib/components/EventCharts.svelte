@@ -3,11 +3,15 @@
   import type { DisplayMember } from '$lib/data/members';
 
   export let members: DisplayMember[];
+  export let newCount: number = 0;
+  export let returningCount: number = 0;
 
   let prefCanvas: HTMLCanvasElement;
   let vehicleCanvas: HTMLCanvasElement;
+  let newReturningCanvas: HTMLCanvasElement;
   let prefChart: any;
   let vehicleChart: any;
+  let newReturningChart: any;
 
   onMount(async () => {
     const { Chart, registerables } = await import('chart.js');
@@ -34,10 +38,11 @@
       options: {
         indexAxis: 'y',
         responsive: true,
+        maintainAspectRatio: false,
         plugins: { legend: { display: false } },
         scales: {
           x: { ticks: { stepSize: 1, precision: 0 }, grid: { display: false } },
-          y: { grid: { display: false } },
+          y: { grid: { display: false }, ticks: { autoSkip: false } },
         }
       }
     });
@@ -58,16 +63,40 @@
       },
       options: {
         responsive: true,
+        maintainAspectRatio: false,
         plugins: {
           legend: { position: 'bottom', labels: { font: { size: 13 } } },
         }
       }
     });
+
+    // New vs Returning
+    if (newReturningCanvas && (newCount + returningCount) > 0) {
+      newReturningChart = new Chart(newReturningCanvas, {
+        type: 'doughnut',
+        data: {
+          labels: ['初参加', 'リピーター'],
+          datasets: [{
+            data: [newCount, returningCount],
+            backgroundColor: ['#388e3c', '#7b1fa2'],
+            borderWidth: 0,
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { position: 'bottom', labels: { font: { size: 13 } } },
+          }
+        }
+      });
+    }
   });
 
   onDestroy(() => {
     prefChart?.destroy();
     vehicleChart?.destroy();
+    newReturningChart?.destroy();
   });
 </script>
 
@@ -76,18 +105,26 @@
 </div>
 
 <div class="chartsSection">
-  <div class="chartCard">
+  <div class="chartCard prefCard">
     <h3 class="chartTitle">生息地分布</h3>
     <div class="chartWrap prefChartWrap">
       <canvas bind:this={prefCanvas}></canvas>
     </div>
   </div>
   <div class="chartCard">
-    <h3 class="chartTitle">参加車両</h3>
+    <h3 class="chartTitle">参加車両内訳</h3>
     <div class="chartWrap vehicleChartWrap">
       <canvas bind:this={vehicleCanvas}></canvas>
     </div>
   </div>
+  {#if newCount + returningCount > 0}
+    <div class="chartCard">
+      <h3 class="chartTitle">初参加 vs リピーター</h3>
+      <div class="chartWrap vehicleChartWrap">
+        <canvas bind:this={newReturningCanvas}></canvas>
+      </div>
+    </div>
+  {/if}
 </div>
 
 <style>
@@ -107,7 +144,7 @@
 
   .chartsSection {
     display: grid;
-    grid-template-columns: 1fr 280px;
+    grid-template-columns: 1fr 1fr;
     gap: 20px;
     max-width: 800px;
     margin: 0 auto 50px;
@@ -118,6 +155,10 @@
     border: 1px solid #e0e0e0;
     border-radius: 10px;
     padding: 20px 24px;
+  }
+
+  .prefCard {
+    grid-column: 1 / -1;
   }
 
   .chartTitle {
@@ -131,13 +172,15 @@
 
   .prefChartWrap {
     position: relative;
+    height: 320px;
   }
 
   .vehicleChartWrap {
+    position: relative;
+    height: 220px;
     display: flex;
     align-items: center;
     justify-content: center;
-    min-height: 180px;
   }
 
   @media (max-width: 767px) {

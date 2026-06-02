@@ -27,6 +27,28 @@
     <div class="mediaList">
       <article class="mediaItem">
         <div class="mediaImage">
+          <img src="/images/media1.webp" alt="カワサキバイクマガジン 2026年7月号" width="440" height="600" />
+        </div>
+        <div class="mediaInfo">
+          <h2 class="mediaTitle">カワサキバイクマガジン</h2>
+          <dl class="mediaDetails">
+            <dt>掲載メディア</dt>
+            <dd>カワサキバイクマガジン（株式会社文友舎刊）</dd>
+            <dt>掲載号数</dt>
+            <dd>2026年7月号（vol.180）</dd>
+            <dt>取材対象</dt>
+            <dd>始祖会 Kanto Owners Meeting 2026 Side-A</dd>
+            <dt>撮影・取材者</dt>
+            <dd>丸山淳大さま</dd>
+          </dl>
+          <a href="http://www.bunyusha-p.com/book/b677378.html" target="_blank" rel="noopener noreferrer" class="mediaLink">
+            <span class="material-icons">open_in_new</span>
+            文友舎の紹介ページを見る
+          </a>
+        </div>
+      </article>
+      <article class="mediaItem">
+        <div class="mediaImage">
           <img src="/images/media0.webp" alt="Mr.Bike BG 2025年3月号" width="1000" height="1412" />
         </div>
         <div class="mediaInfo">

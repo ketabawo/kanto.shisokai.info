@@ -17,36 +17,39 @@
   
   let isLoaded = false;
 
-  const totalUniqueUsers = 51;
-  const repeatUsers = 29; // 2回以上参加した人数
-  const repeatRate = ((repeatUsers / totalUniqueUsers) * 100).toFixed(1); // 56.9%
-  const perfectAttendance = 10; // 皆勤者数
-  const perfectAttendanceRate = ((perfectAttendance / totalUniqueUsers) * 100).toFixed(1); // 19.6%
+  const totalUniqueUsers = 57;
+  const repeatUsers = 32; // 2回以上参加した人数
+  const repeatRate = ((repeatUsers / totalUniqueUsers) * 100).toFixed(1);
+  const perfectAttendance = 9; // 皆勤者数（全5回参加）
+  const perfectAttendanceRate = ((perfectAttendance / totalUniqueUsers) * 100).toFixed(1);
 
   const eventData = {
-    events: ['鯨x鯱2023', '2024 Side-A', '2024 Side-B', '2025 Side-A'],
-    uniqueUsers: [23, 26, 28, 26],
-    newUsers: [23, 13, 11, 4],
-    returningUsers: [0, 13, 17, 22]
+    events: ['鯨x鯱2023', '2024 Side-A', '2024 Side-B', '2025 Side-A', '2026 Side-A'],
+    uniqueUsers: [23, 26, 28, 26, 29],
+    newUsers: [23, 13, 11, 4, 6],
+    returningUsers: [0, 13, 17, 22, 23]
   };
 
   const prefectureDistribution = {
-    '神奈川県': 17,
-    '東京都': 14,
+    '神奈川県': 18,
+    '東京都': 16,
     '千葉県': 10,
     '静岡県': 3,
-    '埼玉県': 2,
+    '埼玉県': 3,
     '群馬県': 2,
     '山梨県': 1,
     '長野県': 1,
-    '大阪府': 1
+    '大阪府': 1,
+    '新潟県': 1,
+    '栃木県': 1
   };
 
   const participationFrequency = {
-    '1回参加': 22,
-    '2回参加': 16,
-    '3回参加': 3,
-    '4回参加（皆勤）': 10
+    '1回参加': 25,
+    '2回参加': 11,
+    '3回参加': 8,
+    '4回参加': 4,
+    '5回参加（皆勤）': 9
   };
 
   onMount(() => {
@@ -243,15 +246,17 @@
             datasets: [{
               data: Object.values(participationFrequency),
               backgroundColor: [
-                'rgba(108, 117, 125, 0.8)',
+                'rgba(180, 180, 180, 0.8)',
                 'rgba(54, 162, 235, 0.8)',
                 'rgba(255, 206, 86, 0.8)',
-                'rgba(184, 28, 37, 0.8)'
+                'rgba(255, 140, 50, 0.8)',
+                'rgba(184, 28, 37, 0.9)'
               ],
               borderColor: [
-                'rgb(108, 117, 125)',
+                'rgb(180, 180, 180)',
                 'rgb(54, 162, 235)',
                 'rgb(255, 206, 86)',
+                'rgb(255, 140, 50)',
                 'rgb(184, 28, 37)'
               ],
               borderWidth: 2
