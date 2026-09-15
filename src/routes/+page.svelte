@@ -1,6 +1,7 @@
 <script lang="ts">
   import { onMount } from 'svelte';
   import UserStatisticsChart from '$lib/UserStatisticsChart.svelte';
+  import { GAS_ENTRY_SHEET_NAME, ENTRY_TARGET_COUNT } from '$lib/entryConfig';
 
   // ビルド時に埋め込まれた日付
   const buildTime = __BUILD_DATE__;
@@ -12,6 +13,11 @@
 
   let showModal = false;
   let showEntryModal = false;
+  let showAlreadyEnteredModal = false;
+  let previousEntryInfo: { submittedAt: string; handleName: string; name: string } | null = null;
+
+  // 参加表明済みかどうかをブラウザに記憶しておくキー（開催回ごとに自動で分かれる）
+  const ENTRY_LOCAL_STORAGE_KEY = `shisokai_entry_${GAS_ENTRY_SHEET_NAME}`;
 
   // 参加表明フォーム
   let entryForm = {
@@ -31,6 +37,17 @@
 
   // reCAPTCHA サイトキー
   const RECAPTCHA_SITE_KEY = '6LfC-JwrAAAAAGbc_p5DwtHvO_TFVFfJ32kZzaiD';
+
+  // スプレッドシート記録用 GAS WebアプリURL（未設定なら記録処理はスキップ）
+  const GAS_ENTRY_WEBHOOK_URL = import.meta.env.VITE_GAS_ENTRY_WEBHOOK_URL as string | undefined;
+  // 現在の参加台数（ビルド時にGASから取得し静的HTMLへ焼き込み済み。vite.config.ts参照）
+  const entryStats = __ENTRY_STATS__;
+  const achievementRate = ENTRY_TARGET_COUNT > 0
+    ? Math.round((entryStats.total / ENTRY_TARGET_COUNT) * 100)
+    : 0;
+  const progressBarWidth = Math.min(100, achievementRate);
+  const rxRatio = entryStats.total > 0 ? Math.round((entryStats.rx / entryStats.total) * 100) : 0;
+  const zx10Ratio = entryStats.total > 0 ? 100 - rxRatio : 0;
 
   // Countdown timer
   let countdownText = '';
@@ -68,6 +85,35 @@
   }
 
   function showEntryModalHandler() {
+    const stored = getStoredEntryInfo();
+    if (stored) {
+      previousEntryInfo = stored;
+      showAlreadyEnteredModal = true;
+      return;
+    }
+    openEntryForm();
+  }
+
+  function getStoredEntryInfo() {
+    try {
+      const raw = localStorage.getItem(ENTRY_LOCAL_STORAGE_KEY);
+      return raw ? JSON.parse(raw) : null;
+    } catch (err) {
+      console.error('参加表明履歴の読み込みに失敗しました:', err);
+      return null;
+    }
+  }
+
+  function closeAlreadyEnteredModal() {
+    showAlreadyEnteredModal = false;
+  }
+
+  function proceedToEntryFormAnyway() {
+    showAlreadyEnteredModal = false;
+    openEntryForm();
+  }
+
+  function openEntryForm() {
     showEntryModal = true;
 
     // モーダル表示時に初めて外部スクリプトを読み込み
@@ -139,6 +185,43 @@
     }
   }
 
+  // スプレッドシートへの記録は失敗してもフォーム送信自体には影響させない
+  function recordToSpreadsheet(data: typeof entryForm) {
+    if (!GAS_ENTRY_WEBHOOK_URL) return;
+
+    fetch(GAS_ENTRY_WEBHOOK_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify({
+        sheetName: GAS_ENTRY_SHEET_NAME,
+        timestamp: new Date().toISOString(),
+        name: data.name,
+        handleName: data.handleName,
+        email: data.email,
+        bikeModel: data.bikeModel,
+        prefecture: data.prefecture,
+        participationRate: data.participationRate,
+        companions: data.companions,
+        remarks: data.remarks
+      })
+    }).catch((err) => {
+      console.error('スプレッドシート記録に失敗しました:', err);
+    });
+  }
+
+  // このブラウザで参加表明済みであることを記憶しておく（次回開催時はキーが変わるので自動でリセットされる）
+  function saveEntryToLocalStorage(data: typeof entryForm) {
+    try {
+      localStorage.setItem(ENTRY_LOCAL_STORAGE_KEY, JSON.stringify({
+        submittedAt: new Date().toISOString(),
+        handleName: data.handleName,
+        name: data.name
+      }));
+    } catch (err) {
+      console.error('参加表明履歴の保存に失敗しました:', err);
+    }
+  }
+
   function closeEntryModal() {
     showEntryModal = false;
     // フォームリセット
@@ -205,6 +288,8 @@
       );
 
       if (response.status === 200) {
+        recordToSpreadsheet(entryForm);
+        saveEntryToLocalStorage(entryForm);
         submitMessage = 'done';
         entryForm = {
           name: '', handleName: '', email: '', bikeModel: '',
@@ -288,42 +373,9 @@
 
     // グローバルコールバック関数は不要（render時に直接指定）
 
-    // モバイルデバイスチェック
-    const isMobile = window.innerWidth <= 768;
-
     // Initialize countdown
     updateCountdown();
     const countdownInterval = setInterval(updateCountdown, 60000); // Update every minute
-
-    // メンバーデータを遅延読み込み（モバイルの場合）
-    if (isMobile) {
-      // モバイルでは2秒後に読み込み開始
-    } else {
-      // デスクトップでは即座に読み込み
-    }
-
-    // 最初の画像のみ即座にプリロード（LCP最適化）
-    const firstImg = new Image();
-    firstImg.src = heroSlides[0].image;
-    firstImg.onload = () => {
-      // 初期画像読み込み完了後に背景を更新
-      const heroElement = document.querySelector('.hero');
-      if (heroElement) {
-        heroElement.setAttribute('style', 
-          heroElement.getAttribute('style') + 
-          `; background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('${heroSlides[0].image}');`
-        );
-      }
-
-      // モバイルでは他の画像の読み込みをさらに遅延
-      const delay = isMobile ? 3000 : 1000;
-      setTimeout(() => {
-        heroSlides.slice(1).forEach((slide) => {
-          const img = new Image();
-          img.src = slide.image;
-        });
-      }, delay);
-    };
 
     function handleScroll() {
       const freedomStyleElement = document.getElementById('freedom-style');
@@ -359,14 +411,14 @@
 </script>
 
 <svelte:head>
-  <link rel="preload" as="image" type="image/webp" href="/images/hero-bg0-sp.webp" media="(max-width: 767px)">
-  <link rel="preload" as="image" type="image/webp" href="/images/hero-bg0.webp" media="(min-width: 768px)">
-  <title>始祖会 Kanto Owners Meeting【for GPZ1000RX & ZX-10 @関東】</title>
+  <link rel="preload" as="image" type="image/webp" href={selectedHeroImage.imageSp} media="(max-width: 767px)" fetchpriority="high">
+  <link rel="preload" as="image" type="image/webp" href={selectedHeroImage.image} media="(min-width: 768px)" fetchpriority="high">
+  <title>【公式】始祖会 Kanto Owners Meeting｜GPZ1000RX & ZX-10 @関東</title>
   <meta name="description" content="始祖会Kanto Owners Meetingは春と秋に関東圏（主に神奈川県）で開催されるGPZ1000RX（ZXT00A/鯨）とZX-10（ZXT00B/鯱）オーナーのための交流を主としたオフ会です。2026年11月1日開催予定。もちろん関東圏外からの参加も大歓迎です。">
   <link rel="canonical" href="https://kanto.shisokai.info/">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://kanto.shisokai.info/">
-  <meta property="og:title" content="始祖会 Kanto Owners Meeting">
+  <meta property="og:title" content="【公式】始祖会 Kanto Owners Meeting">
   <meta property="og:description" content="始祖会Kanto Owners Meetingは春と秋に関東圏（主に神奈川県）で開催されるGPZ1000RX（ZXT00A/鯨）とZX-10（ZXT00B/鯱）オーナーのための交流を主としたオフ会です。">
   <meta property="og:image" content="https://kanto.shisokai.info/images/OGP.png">
   <meta property="og:image:width" content="1200">
@@ -374,7 +426,7 @@
   <meta property="og:site_name" content="始祖会 Kanto Owners Meeting">
   <meta property="og:locale" content="ja_JP">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="始祖会 Kanto Owners Meeting">
+  <meta name="twitter:title" content="【公式】始祖会 Kanto Owners Meeting">
   <meta name="twitter:description" content="始祖会Kanto Owners Meetingは春と秋に関東圏（主に神奈川県）で開催されるGPZ1000RX（ZXT00A/鯨）とZX-10（ZXT00B/鯱）オーナーのための交流を主としたオフ会です。">
   <meta name="twitter:image" content="https://kanto.shisokai.info/images/OGP.png">
   {@html `<script type="application/ld+json">${JSON.stringify({
@@ -431,7 +483,10 @@
     "url": "https://kanto.shisokai.info",
     "logo": "https://kanto.shisokai.info/images/logo.webp",
     "description": "GPZ1000RX（ZXT00A/鯨）とZX-10（ZXT00B/鯱）オーナーのための交流を主としたオフ会",
-    "sameAs": [],
+    "sameAs": [
+      "https://zx10.ketabawo.asia/",
+      "https://www.instagram.com/zx10.ketabawo/"
+    ],
     "contactPoint": {
       "@type": "ContactPoint",
       "contactType": "Customer Support",
@@ -461,11 +516,11 @@
 
   <div class="container" style="position: relative; z-index: 3;">
     <div class="heroContent">
-      <h1><img src="/images/hero-title.webp" alt="Kanto Owners Meeting/関東オーナーズミーティング" class="heroTitleImage" width="3624" height="326" /></h1>
+      <h1><img src="/images/hero-title.webp" srcset="/images/hero-title-900.webp 900w, /images/hero-title.webp 1800w" sizes="(min-width: 768px) 600px, 555px" alt="Kanto Owners Meeting/関東オーナーズミーティング" class="heroTitleImage" width="1800" height="162" /></h1>
       <p class="heroSubtitle">for <strong title="zxt00a">GPZ1000RX</strong> & <strong title="zxt00b">ZX-10</strong></p>
       <p class="heroDescription">
         世に回遊している鯨と鯱を愛する孤高な主たちが邂逅を果たせる聖地
-        {#if ENTRY_OPEN}<br><span class="heroCatchphrase">2026 Side-B 参加者募集中！</span>{:else}<br><span class="heroCatchphrase">次回2026 Side-B は2026年11月1日（日）開催</span>{/if}
+        {#if ENTRY_OPEN}<br><span class="heroCatchphrase">2026 Side-B 参加者募集中！<br><span class="heroMediaBadge">カワサキバイクマガジン取材あり</span></span>{:else}<br><span class="heroCatchphrase">次回2026 Side-B は2026年11月1日（日）開催<br><span class="heroMediaBadge">カワサキバイクマガジン取材あり</span></span>{/if}
       </p>
       <div class="heroButtons heroButtonsCentered">
         {#if ENTRY_OPEN}
@@ -527,6 +582,36 @@
         <p>始祖会関東公式サイトのメインビジュアル写真を募集しています。</p>
         <p>あなたが撮影したかっこいい写真を掲載させてください。</p>
         <p>お手数ですが主宰ブログやSNSよりご連絡ください。</p>
+      </div>
+    </div>
+  </div>
+{/if}
+
+{#if showAlreadyEnteredModal}
+  <!-- svelte-ignore a11y-click-events-have-key-events -->
+  <div class="modalOverlay" on:click={closeAlreadyEnteredModal} on:keydown={(e) => e.key === 'Escape' && closeAlreadyEnteredModal()} role="dialog" aria-modal="true" tabindex="-1">
+    <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
+    <!-- svelte-ignore a11y-click-events-have-key-events -->
+    <div class="modalContent" on:click|stopPropagation role="document">
+      <div class="modalHeader">
+        <h3>参加表明済みです</h3>
+        <button class="closeIconBtn" on:click={closeAlreadyEnteredModal} aria-label="閉じる">
+          <span class="material-icons">close</span>
+        </button>
+      </div>
+      <div class="modalBody">
+        <p>このブラウザからは今回の参加表明が既に送信されています。</p>
+        {#if previousEntryInfo}
+          <p class="submitCompleteNote">
+            送信者: {previousEntryInfo.handleName || previousEntryInfo.name || '(不明)'}<br>
+            送信日時: {new Date(previousEntryInfo.submittedAt).toLocaleString('ja-JP')}
+          </p>
+        {/if}
+        <p>内容を修正したい場合は、そのまま新しく送信し直してください。</p>
+      </div>
+      <div class="alreadyEnteredActions">
+        <button class="btn" on:click={closeAlreadyEnteredModal}>閉じる</button>
+        <button class="btn btnPrimary" on:click={proceedToEntryFormAnyway}>それでも新しく送信する</button>
       </div>
     </div>
   </div>
@@ -800,7 +885,7 @@
     <h2 class="sectionTitle">始祖会 Kanto Owners Meetingとは</h2>
     <div class="aboutContent">
       <p>
-        ロングセラーであるGPZ900RからZZR1100までの過渡期を支えたGPZ1000RXとZX-10を対象とした年2回開催のオーナーズミーティングで、関西エリアで開催されていた現在休止中の「始祖会」から名前をお借りして関東エリアで開催しています。
+ロングセラーであるGPZ900RからZZR1100までの過渡期を支えたGPZ1000RXとZX-10を対象とした年2回開催のオーナーズミーティングで、2016年3月に西日本エリアでスタートし現在休止中の「始祖会」から名前をお借りして関東エリアで開催しています。
       </p>
       <p>
         型式「ZXT00」シリーズの起点であるGPZ1000RXと今も尚続く「ZX」シリーズの起点であるZX-10を対象としているのが始祖会の由来だとかなんとか。
@@ -835,7 +920,7 @@
           <div class="featureImage" style="background-image: url('/images/feature2.webp')"></div>
           <div class="featureText">
             <h3><span class="material-icons">filter_3</span> 取り組み</h3>
-            <p>セキュリティ強化目的で専用IDカードホルダを無料配布し非参加者と容易に判別できるようにしています。市場価値では測れない大事なあなたの愛車を守るための施策です。<br>また、参加者同士の交流を促す目的もあります。<br>普段からオンラインでも交流できるようLINEグループ<span class="noteMark">（※）</span>もございます。<br><br><span class="noteText">※グループ参加には1度以上参加経験がある事が条件です</span></p>
+            <p>セキュリティ強化目的で専用IDカードホルダを無料配布し非参加者と容易に判別できるようにしています。市場価値では測れない大事なあなたの愛車を守るための施策です。<br><span class="noteText">※前回在庫切れでお渡しできなかった時期がありましたが、本日大量入荷しましたので、まだ持ってない方は次回参加時にお気軽にお声がけください。</span><br>また、参加者同士の交流を促す目的もあります。<br>普段からオンラインでも交流できるようLINEグループ<span class="noteMark">（※）</span>もございます。<br><br><span class="noteText">※グループ参加には1度以上参加経験がある事が条件です</span></p>
           </div>
         </div>
       </div>
@@ -1074,7 +1159,8 @@
             <th>後援協力</th>
             <td>
               <ul style="margin: 0; padding-left: 20px; list-style-type: disc;">
-                <li><a href="https://happy-r.co.jp/" target="_blank" rel="noopener noreferrer">Riders Base Riberty</a> さま</li>
+                <li><a href="https://riberty.re-one.net/" target="_blank" rel="noopener noreferrer">Riders Base Riberty</a> さま</li>
+                <li><a href="https://www.bunyusha-p.com/" target="_blank" rel="noopener noreferrer">文友舎</a> さま</li>
               </ul>
             </td>
           </tr>
@@ -1097,33 +1183,90 @@
               <div class="counterContentInline">
                 <div class="counterMainInfo">
                   <div class="counterNumber">
-                    <span class="currentCount">0</span>
+                    <span class="currentCount">{entryStats.total}</span>
                     <span class="countUnit">台</span>
-                    <span class="targetInfo">/ 目標 30台（達成率: 0%）</span>
+                    <span class="targetInfo">/ 目標 {ENTRY_TARGET_COUNT}台（達成率: {achievementRate}%）</span>
                   </div>
                   <div class="bikeBreakdown">
-                    <span class="breakdownItem">GPZ1000RX: 0台</span>
+                    <span class="breakdownItem">GPZ1000RX: {entryStats.rx}台</span>
                     <span class="divider">|</span>
-                    <span class="breakdownItem">ZX-10: 0台</span>
+                    <span class="breakdownItem">ZX-10: {entryStats.zx10}台</span>
                   </div>
                 </div>
                 <div class="progressBarContainer">
-                  <div class="progressBar" style="width: 0%">
-                    <div class="progressBarRX" style="width: 0%"></div>
-                    <div class="progressBarZX10" style="width: 0%"></div>
+                  <div class="progressBar" style="width: {progressBarWidth}%">
+                    <div class="progressBarRX" style="width: {rxRatio}%"></div>
+                    <div class="progressBarZX10" style="width: {zx10Ratio}%"></div>
                   </div>
                 </div>
-                <div class="participantListLink">
-                  <span class="participantListPreparing">
-                    <span class="material-icons">list_alt</span>
-                    参加予定者一覧は準備中です
-                  </span>
-                </div>
+                {#if entryStats.participants.length > 0}
+                  <div class="participantListWrapper">
+                    <table class="participantTable">
+                      <thead>
+                        <tr>
+                          <th>お名前</th>
+                          <th>車種</th>
+                          <th>生息地</th>
+                          <th>参加確度</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {#each entryStats.participants as participant}
+                          <tr>
+                            <td>{participant.displayName}</td>
+                            <td>{participant.bikeModel}</td>
+                            <td>{participant.prefecture}</td>
+                            <td>{participant.participationRate}</td>
+                          </tr>
+                        {/each}
+                      </tbody>
+                    </table>
+                  </div>
+                {:else}
+                  <div class="participantListLink">
+                    <span class="participantListPreparing">
+                      <span class="material-icons">list_alt</span>
+                      まだ参加表明はありません
+                    </span>
+                  </div>
+                {/if}
               </div>
             </td>
           </tr>
         </tbody>
       </table>
+  </div>
+</section>
+
+<section class="section section-gray">
+  <div class="container">
+    <h2 class="sectionTitle">拡散にご協力ください</h2>
+    <p class="spreadKitIntro">SNSでのシェア、大歓迎です！以下の画像をダウンロードしてX・Instagram等でご自由にお使いください。</p>
+    <div class="spreadKitGrid">
+      <div class="spreadKitItem">
+        <img src="/images/spread-kit-x.png" alt="始祖会 Kanto Owners Meeting 2026 Side-B 告知画像（X用）" loading="lazy" width="1600" height="900" />
+        <a href="/images/spread-kit-x.png" download class="btn btnPrimary spreadKitDownload">
+          <span class="material-icons">download</span> X用をダウンロード
+        </a>
+      </div>
+      <div class="spreadKitItem">
+        <img src="/images/spread-kit-instagram.png" alt="始祖会 Kanto Owners Meeting 2026 Side-B 告知画像（Instagram用）" loading="lazy" width="1080" height="1350" />
+        <a href="/images/spread-kit-instagram.png" download class="btn btnPrimary spreadKitDownload">
+          <span class="material-icons">download</span> Instagram用をダウンロード
+        </a>
+      </div>
+    </div>
+
+    <div class="spreadKitLinkInvite">
+      <p>ブログやWebサイトを運営されている方は、告知記事や当サイトへのリンクもぜひお願いします！</p>
+      <p class="spreadKitLinkLabel">リンク文言: 始祖会 Kanto Owners Meeting 公式サイト</p>
+      <div class="addressContainer">
+        <span id="spreadKitUrl">https://kanto.shisokai.info/</span>
+        <button class="copyButton" on:click={() => copyToClipboard('spreadKitUrl')} title="URLをコピー">
+          <span class="material-icons">content_copy</span>
+        </button>
+      </div>
+    </div>
   </div>
 </section>
 {/if}
@@ -1245,6 +1388,14 @@
     line-height: 1.6;
   }
 
+  .alreadyEnteredActions {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+    padding: 0 20px 20px;
+    flex-wrap: wrap;
+  }
+
   .noteMark {
     font-size: 0.6em;
     vertical-align: super;
@@ -1309,6 +1460,7 @@
     color: #fff;
     display: block;
     margin-top: 20px;
+    line-height: 1.2;
     text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
     animation: blink 3s ease-in-out infinite;
   }
@@ -1326,6 +1478,13 @@
     .heroCatchphrase {
       font-size: 2.1rem;
     }
+  }
+
+  .heroMediaBadge {
+    display: inline-block;
+    margin-top: 5px;
+    font-size: 0.8em;
+    font-weight: normal;
   }
 
   .heroButtons {
@@ -1687,6 +1846,79 @@
     text-decoration: underline;
   }
 
+  .spreadKitIntro {
+    max-width: 900px;
+    margin: 0 auto 30px;
+    padding: 0 20px;
+    text-align: center;
+    color: #555;
+    font-size: 1.05rem;
+  }
+
+  .spreadKitGrid {
+    display: grid;
+    gap: 30px;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+
+  @media (min-width: 768px) {
+    .spreadKitGrid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  .spreadKitItem {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    background-color: #fff;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    padding: 20px;
+  }
+
+  .spreadKitItem img {
+    width: 100%;
+    height: auto;
+    border-radius: 5px;
+  }
+
+  .spreadKitDownload {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    justify-content: center;
+    width: 100%;
+  }
+
+  .spreadKitLinkInvite {
+    max-width: 600px;
+    margin: 30px auto 0;
+    padding: 20px;
+    background-color: #fff;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    text-align: center;
+  }
+
+  .spreadKitLinkInvite p {
+    margin: 0 0 10px;
+    color: #555;
+  }
+
+  .spreadKitLinkLabel {
+    font-weight: bold;
+    color: #333 !important;
+  }
+
+  .spreadKitLinkInvite .addressContainer {
+    justify-content: center;
+    margin-bottom: 0;
+  }
+
   @media (max-width: 767px) {
     .eventTable {
       margin: 40px 20px 0;
@@ -1984,8 +2216,12 @@
 
   /* リンクの色 */
   a {
-    color: #1e90ff;
+    color: #0969da;
     text-decoration: none;
+  }
+
+  a.spreadKitDownload {
+    color: #fff;
   }
 
   a:hover {
@@ -2118,6 +2354,36 @@
   .progressBarZX10 {
     height: 100%;
     background: linear-gradient(90deg, #333 0%, #666 100%);
+  }
+
+  .participantListWrapper {
+    margin-top: 15px;
+    overflow-x: auto;
+  }
+
+  .participantTable {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #fff;
+    font-size: 0.9rem;
+  }
+
+  .participantTable th,
+  .participantTable td {
+    padding: 8px 12px;
+    border: 1px solid #e0e0e0;
+    text-align: left;
+    white-space: nowrap;
+  }
+
+  .participantTable th {
+    background-color: #f5f5f5;
+    color: #333;
+    font-weight: bold;
+  }
+
+  .participantTable tbody tr:nth-child(even) {
+    background-color: #fafafa;
   }
 
   .participantListLink {

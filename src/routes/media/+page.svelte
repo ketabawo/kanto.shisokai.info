@@ -13,6 +13,48 @@
   <meta name="twitter:title" content="メディア掲載 | 始祖会 GPZ1000RX・ZX-10 オーナーズミーティング">
   <meta name="twitter:description" content="GPZ1000RX・ZX-10オーナーズミーティング「始祖会」のメディア掲載実績。雑誌等での取材・掲載情報をまとめています。">
   <meta name="twitter:image" content="https://kanto.shisokai.info/images/OGP.png">
+  {@html `<script type="application/ld+json">${JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "始祖会 Kanto Owners Meeting",
+    "alternateName": "始祖会関東",
+    "url": "https://kanto.shisokai.info",
+    "logo": "https://kanto.shisokai.info/images/logo.webp",
+    "subjectOf": [
+      {
+        "@type": "CreativeWork",
+        "name": "カワサキバイクマガジン 2026年7月号（vol.180）",
+        "about": "始祖会 Kanto Owners Meeting 2026 Side-A",
+        "datePublished": "2026-07",
+        "publisher": {
+          "@type": "Organization",
+          "name": "株式会社文友舎"
+        },
+        "author": {
+          "@type": "Person",
+          "name": "丸山淳大"
+        },
+        "image": "https://kanto.shisokai.info/images/media1.webp",
+        "url": "http://www.bunyusha-p.com/book/b677378.html"
+      },
+      {
+        "@type": "CreativeWork",
+        "name": "Mr.Bike BG 2025年3月号",
+        "about": "始祖会 Kanto Owners Meeting 2024 Side-B",
+        "datePublished": "2025-03",
+        "publisher": {
+          "@type": "Organization",
+          "name": "モーターマガジン社"
+        },
+        "author": {
+          "@type": "Person",
+          "name": "黒毛和牛太"
+        },
+        "image": "https://kanto.shisokai.info/images/media0.webp",
+        "url": "https://www.motormagazine.co.jp/_ct/17748614"
+      }
+    ]
+  })}</script>`}
 </svelte:head>
 
 <section class="pageHero">
@@ -27,7 +69,7 @@
     <div class="mediaList">
       <article class="mediaItem">
         <div class="mediaImage">
-          <img src="/images/media1.webp" alt="カワサキバイクマガジン 2026年7月号" width="440" height="600" />
+          <img src="/images/media1.webp" alt="カワサキバイクマガジン 2026年7月号" width="440" height="600" fetchpriority="high" />
         </div>
         <div class="mediaInfo">
           <h2 class="mediaTitle">カワサキバイクマガジン</h2>

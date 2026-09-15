@@ -64,7 +64,7 @@
   <div class="container">
     <div class="eventImageArea">
       {#if event.detailImage}
-        <img src={event.detailImage} alt={event.name} width="1600" height="1067">
+        <img src={event.detailImage} alt={event.name} width="1600" height="1067" fetchpriority="high">
       {:else}
         <div class="noImage">
           <span class="material-icons">photo_camera</span>

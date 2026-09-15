@@ -26,7 +26,10 @@
       "@type": "Person",
       "name": "ketabawo",
       "description": "始祖会 Kanto Owners Meeting 主宰",
-      "sameAs": ["https://www.instagram.com/zx10.ketabawo/"]
+      "sameAs": [
+        "https://zx10.ketabawo.asia/",
+        "https://www.instagram.com/zx10.ketabawo/"
+      ]
     }
   })}</script>`}
 </svelte:head>
@@ -42,7 +45,7 @@
   <div class="container">
     <div class="profile-card">
       <div class="profile-image-section">
-        <img src="/images/admin-image.webp" alt="ketabawo" class="profile-image" />
+        <img src="/images/admin-image.webp" alt="ketabawo" class="profile-image" fetchpriority="high" />
       </div>
       
       <div class="profile-info-section">
