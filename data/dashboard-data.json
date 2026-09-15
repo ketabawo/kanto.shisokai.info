@@ -507,7 +507,7 @@
     },
     {
       "name": "/history/",
-      "coverageState": "Excluded by ‘noindex’ tag",
+      "coverageState": "Excluded by \u2018noindex\u2019 tag",
       "lastCrawlTime": "2026-09-15"
     },
     {
@@ -542,23 +542,7 @@
     }
   ],
   "history": {
-    "mobile": [
-      {
-        "date": "2026-09-15",
-        "performance": null,
-        "accessibility": null,
-        "bestPractices": null,
-        "seo": null
-      }
-    ],
-    "desktop": [
-      {
-        "date": "2026-09-15",
-        "performance": 76,
-        "accessibility": 96,
-        "bestPractices": 92,
-        "seo": 100
-      }
-    ]
+    "mobile": [],
+    "desktop": []
   }
 }
