@@ -99,17 +99,41 @@ function severityOf(score) {
   return 'good';
 }
 
-async function buildStrategyData(paths, strategy) {
+// 同時実行数を絞った並列実行(PSIは1件あたり15〜40秒かかる実処理のため、逐次だと26回で数分〜十数分かかる)
+async function mapWithConcurrency(items, limit, fn) {
+  const results = new Array(items.length);
+  let cursor = 0;
+  async function worker() {
+    while (cursor < items.length) {
+      const i = cursor++;
+      results[i] = await fn(items[i], i);
+    }
+  }
+  await Promise.all(Array.from({ length: Math.min(limit, items.length) }, worker));
+  return results;
+}
+
+async function fetchAllPSI(paths, strategies, concurrency = 8) {
+  const jobs = strategies.flatMap((strategy) => paths.map((path) => ({ path, strategy })));
+  const results = await mapWithConcurrency(jobs, concurrency, async ({ path, strategy }) => {
+    const r = await checkPagePSI(`${BASE_URL}${path}`, strategy);
+    if (r.error) console.warn(`[PSI ${strategy}] ${path} error: ${r.error}`);
+    return { path, strategy, r };
+  });
+  const map = new Map();
+  for (const { path, strategy, r } of results) {
+    map.set(`${strategy}::${path}`, r);
+  }
+  return map;
+}
+
+function buildStrategyData(paths, strategy, resultsMap) {
   const latestScores = [];
   const taskMap = new Map();
 
   for (const path of paths) {
-    const url = `${BASE_URL}${path}`;
-    const r = await checkPagePSI(url, strategy);
-    if (r.error) {
-      console.warn(`[PSI ${strategy}] ${path} error: ${r.error}`);
-      continue;
-    }
+    const r = resultsMap.get(`${strategy}::${path}`);
+    if (!r || r.error) continue;
     latestScores.push({ name: path, performance: r.performance, accessibility: r.accessibility, bestPractices: r.bestPractices, seo: r.seo });
 
     for (const f of r.failures) {
@@ -201,10 +225,10 @@ async function buildIndexStatus(paths) {
 // ---- main ----
 const paths = await getSitemapPaths();
 
-console.log('Running PSI (mobile)...');
-const mobile = await buildStrategyData(paths, 'mobile');
-console.log('Running PSI (desktop)...');
-const desktop = await buildStrategyData(paths, 'desktop');
+console.log('Running PSI (mobile + desktop, parallel)...');
+const psiResults = await fetchAllPSI(paths, ['mobile', 'desktop']);
+const mobile = buildStrategyData(paths, 'mobile', psiResults);
+const desktop = buildStrategyData(paths, 'desktop', psiResults);
 console.log('Running Search Console URL Inspection...');
 const indexStatus = await buildIndexStatus(paths);
 
