@@ -206,13 +206,13 @@
 </script>
 
 <svelte:head>
-  <title>PSI 監視ダッシュボード（管理用）</title>
+  <title>サイトヘルスダッシュボード（管理用）</title>
   <meta name="robots" content="noindex, nofollow">
 </svelte:head>
 
 <section class="dashboard">
   <div class="container">
-    <h1>PSI 監視ダッシュボード</h1>
+    <h1>サイトヘルスダッシュボード</h1>
     <p class="note">
       このページは <code>noindex</code> 指定・ナビ非掲載の非公開URLです。
     </p>
