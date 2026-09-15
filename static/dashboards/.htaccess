@@ -1,0 +1,4 @@
+AuthType Basic
+AuthName "Restricted Area"
+AuthUserFile /virtual/sousui/public_html/kanto.shisokai.info/dashboards/.htpasswd_dashboards
+Require valid-user
