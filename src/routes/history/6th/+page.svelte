@@ -55,7 +55,7 @@
       <span>{event.date}</span>
       <span class="separator">|</span>
       <span class="material-icons">location_on</span>
-      <span><a href="https://happy-r.co.jp/" target="_blank" rel="noopener noreferrer" class="locationLink">{event.location}</a></span>
+      <span><a href="https://riberty.re-one.net/" target="_blank" rel="noopener noreferrer" class="locationLink">{event.location}</a></span>
     </div>
   </div>
 </section>
@@ -76,7 +76,7 @@
     <div class="videoGrid">
       <div class="videoArea">
         <iframe
-          src="https://www.youtube.com/embed/1Gt_qFT2TKk"
+          src="https://www.youtube-nocookie.com/embed/1Gt_qFT2TKk"
           title="YouTube動画 1: 始祖会 Kanto Owners Meeting 2026 Side-A"
           loading="lazy"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
@@ -86,7 +86,7 @@
       </div>
       <div class="videoArea">
         <iframe
-          src="https://www.youtube.com/embed/GF6tjMo_akY"
+          src="https://www.youtube-nocookie.com/embed/GF6tjMo_akY"
           title="YouTube動画 2: 始祖会 Kanto Owners Meeting 2026 Side-A"
           loading="lazy"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
@@ -340,7 +340,7 @@
 
   .groupCount {
     font-size: 0.9rem;
-    color: #767676;
+    color: #666666;
     font-weight: normal;
   }
 
@@ -416,7 +416,7 @@
 
   .memberPref {
     font-size: 0.75rem;
-    color: #767676;
+    color: #666666;
     white-space: nowrap;
     flex-shrink: 0;
     margin-left: 8px;

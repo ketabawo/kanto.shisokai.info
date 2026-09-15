@@ -79,14 +79,14 @@
 
   .navItem.cancelled {
     text-decoration: line-through;
-    color: #aaa;
+    color: #666;
     border-color: #ddd;
     pointer-events: none;
   }
 
   .navItem.active.cancelled {
-    background: #888;
-    border-color: #888;
+    background: #666;
+    border-color: #666;
     color: #fff;
     opacity: 1;
   }
