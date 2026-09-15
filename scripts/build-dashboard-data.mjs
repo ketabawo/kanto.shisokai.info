@@ -29,10 +29,19 @@ async function getSitemapPaths() {
 }
 
 // ---- PSI ----
-async function checkPagePSI(url, strategy) {
+// PSI(Lighthouse)は「Something went wrong」的な一時的失敗を時々返すため、リトライする
+async function checkPagePSI(url, strategy, attempt = 1) {
   const apiUrl = `https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url=${encodeURIComponent(url)}&key=${PSI_API_KEY}&strategy=${strategy}&category=performance&category=accessibility&category=best-practices&category=seo`;
   const res = await fetch(apiUrl);
-  if (!res.ok) return { error: await res.text() };
+  if (!res.ok) {
+    const errText = await res.text();
+    if (attempt < 3) {
+      console.warn(`[PSI ${strategy}] ${url} attempt ${attempt} failed, retrying...`);
+      await new Promise((r) => setTimeout(r, 5000));
+      return checkPagePSI(url, strategy, attempt + 1);
+    }
+    return { error: errText };
+  }
   const data = await res.json();
   const cats = data.lighthouseResult?.categories || {};
   const audits = data.lighthouseResult?.audits || {};
@@ -210,13 +219,17 @@ if (existsSync(OUT_PATH)) {
 }
 
 function pushHistory(arr, strategyData) {
-  const home = strategyData.latestScores.find(s => s.name === '/') || {};
+  const home = strategyData.latestScores.find(s => s.name === '/');
+  if (!home) {
+    console.warn('[build-dashboard-data] ホームページのPSI取得に失敗したため、今回の履歴追加をスキップ');
+    return arr;
+  }
   const next = [...arr, {
     date: today,
-    performance: home.performance ?? null,
-    accessibility: home.accessibility ?? null,
-    bestPractices: home.bestPractices ?? null,
-    seo: home.seo ?? null
+    performance: home.performance,
+    accessibility: home.accessibility,
+    bestPractices: home.bestPractices,
+    seo: home.seo
   }];
   return next.slice(-HISTORY_LIMIT);
 }
