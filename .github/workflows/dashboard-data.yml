@@ -1,0 +1,36 @@
+name: Dashboard Data Refresh
+
+on:
+  schedule:
+    - cron: '0 16 * * *'  # 毎日1:00 JST (16:00 UTC)
+  workflow_dispatch:  # 手動トリガー(ダッシュボードの「最新情報を反映」ボタンから起動)
+
+permissions:
+  contents: write
+
+jobs:
+  build-data:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+
+      - name: Create .env.local
+        run: echo "PSI_API_KEY=${{ secrets.PSI_API_KEY }}" > .env.local
+
+      - name: Create gcp-service-account.json
+        run: echo '${{ secrets.GCP_SERVICE_ACCOUNT_JSON }}' > gcp-service-account.json
+
+      - name: Build dashboard data (PSI + Search Console)
+        run: node scripts/build-dashboard-data.mjs
+
+      - name: Commit and push data/dashboard-data.json
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/dashboard-data.json
+          git diff --quiet --cached || git commit -m "chore: update dashboard data [skip ci]"
+          git push
