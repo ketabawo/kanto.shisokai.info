@@ -225,12 +225,13 @@ async function buildIndexStatus(paths) {
 // ---- main ----
 const paths = await getSitemapPaths();
 
-console.log('Running PSI (mobile + desktop, parallel)...');
-const psiResults = await fetchAllPSI(paths, ['mobile', 'desktop']);
+console.log('Running PSI + Search Console URL Inspection (parallel, independent data sources)...');
+const [psiResults, indexStatus] = await Promise.all([
+  fetchAllPSI(paths, ['mobile', 'desktop']),
+  buildIndexStatus(paths),
+]);
 const mobile = buildStrategyData(paths, 'mobile', psiResults);
 const desktop = buildStrategyData(paths, 'desktop', psiResults);
-console.log('Running Search Console URL Inspection...');
-const indexStatus = await buildIndexStatus(paths);
 
 const today = new Date().toISOString().slice(0, 10);
 
