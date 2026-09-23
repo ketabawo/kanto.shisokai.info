@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-09-22T19:41:56.309Z",
+  "generatedAt": "2026-09-23T19:37:42.244Z",
   "mobile": {
     "latestScores": [
       {
         "name": "/",
-        "performance": 62,
+        "performance": 63,
         "accessibility": 100,
         "bestPractices": 100,
         "seo": 100
@@ -18,14 +18,14 @@
       },
       {
         "name": "/voices/",
-        "performance": 100,
+        "performance": 99,
         "accessibility": 100,
         "bestPractices": 100,
         "seo": 100
       },
       {
         "name": "/media/",
-        "performance": 100,
+        "performance": 96,
         "accessibility": 100,
         "bestPractices": 100,
         "seo": 100
@@ -39,21 +39,21 @@
       },
       {
         "name": "/contact/",
-        "performance": 85,
+        "performance": 90,
         "accessibility": 100,
         "bestPractices": 96,
         "seo": 100
       },
       {
         "name": "/history/",
-        "performance": 99,
+        "performance": 63,
         "accessibility": 100,
         "bestPractices": 100,
         "seo": 100
       },
       {
         "name": "/history/6th/",
-        "performance": 62,
+        "performance": 61,
         "accessibility": 100,
         "bestPractices": 96,
         "seo": 100
@@ -67,14 +67,14 @@
       },
       {
         "name": "/history/4th/",
-        "performance": 76,
+        "performance": 95,
         "accessibility": 100,
         "bestPractices": 100,
         "seo": 100
       },
       {
         "name": "/history/3rd/",
-        "performance": 82,
+        "performance": 96,
         "accessibility": 100,
         "bestPractices": 100,
         "seo": 100
@@ -88,7 +88,7 @@
       },
       {
         "name": "/history/1st/",
-        "performance": 84,
+        "performance": 93,
         "accessibility": 100,
         "bestPractices": 100,
         "seo": 100
@@ -97,42 +97,42 @@
     "issues": [
       {
         "cat": "Perf",
-        "severity": "good",
+        "severity": "low",
         "fixable": "FIXABLE",
         "title": "First Contentful Paint",
-        "pages": "/, /history/4th/, /history/3rd/"
+        "pages": "/, /voices/, /history/, /history/5th/, /history/1st/"
+      },
+      {
+        "cat": "Perf",
+        "severity": "mid",
+        "fixable": "FIXABLE",
+        "title": "Largest Contentful Paint",
+        "pages": "/, /about/, /voices/, /media/, /history/, /history/6th/, /history/4th/, /history/3rd/, /history/2nd/, /history/1st/"
+      },
+      {
+        "cat": "Perf",
+        "severity": "low",
+        "fixable": "EXTERNAL",
+        "title": "Total Blocking Time",
+        "pages": "/, /contact/, /history/, /history/6th/, /history/1st/"
       },
       {
         "cat": "Perf",
         "severity": "low",
         "fixable": "FIXABLE",
-        "title": "Largest Contentful Paint",
-        "pages": "/, /about/, /contact/, /history/, /history/6th/, /history/4th/, /history/3rd/, /history/2nd/, /history/1st/"
-      },
-      {
-        "cat": "Perf",
-        "severity": "mid",
-        "fixable": "EXTERNAL",
-        "title": "Total Blocking Time",
-        "pages": "/, /contact/, /history/6th/"
-      },
-      {
-        "cat": "Perf",
-        "severity": "mid",
-        "fixable": "FIXABLE",
         "title": "Speed Index",
-        "pages": "/, /about/, /media/, /history/, /history/6th/, /history/4th/, /history/3rd/, /history/1st/"
+        "pages": "/, /voices/, /history/, /history/6th/, /history/5th/, /history/4th/, /history/1st/"
       },
       {
         "cat": "Perf",
         "severity": "high",
         "fixable": "EXTERNAL",
         "title": "Forced reflow",
-        "pages": "/, /voices/, /media/, /faqs/, /history/6th/, /history/5th/, /history/4th/, /history/3rd/, /history/1st/"
+        "pages": "/, /about/, /voices/, /media/, /faqs/, /history/, /history/6th/, /history/5th/, /history/4th/, /history/3rd/, /history/2nd/, /history/1st/"
       },
       {
         "cat": "Perf",
-        "severity": "low",
+        "severity": "high",
         "fixable": "FIXABLE",
         "title": "Improve image delivery",
         "pages": "all pages"
@@ -142,7 +142,14 @@
         "severity": "high",
         "fixable": "FIXABLE",
         "title": "LCP breakdown",
-        "pages": "/, /history/6th/"
+        "pages": "/, /history/"
+      },
+      {
+        "cat": "Perf",
+        "severity": "high",
+        "fixable": "FIXABLE",
+        "title": "LCP request discovery",
+        "pages": "/"
       },
       {
         "cat": "Perf",
@@ -156,35 +163,35 @@
         "severity": "mid",
         "fixable": "FIXABLE",
         "title": "Time to Interactive",
-        "pages": "/, /about/, /contact/, /history/, /history/6th/, /history/4th/, /history/3rd/, /history/2nd/, /history/1st/"
+        "pages": "/, /about/, /media/, /contact/, /history/, /history/6th/, /history/4th/, /history/3rd/, /history/2nd/, /history/1st/"
       },
       {
         "cat": "Perf",
-        "severity": "mid",
+        "severity": "high",
         "fixable": "EXTERNAL",
         "title": "Max Potential First Input Delay",
-        "pages": "/, /faqs/, /contact/, /history/, /history/6th/"
+        "pages": "/, /contact/, /history/, /history/6th/, /history/1st/"
       },
       {
         "cat": "Perf",
         "severity": "high",
         "fixable": "EXTERNAL",
         "title": "Reduce unused JavaScript",
-        "pages": "/, /faqs/, /contact/, /history/, /history/6th/, /history/4th/, /history/3rd/, /history/2nd/, /history/1st/"
+        "pages": "/, /contact/, /history/, /history/6th/, /history/5th/, /history/4th/, /history/3rd/, /history/2nd/, /history/1st/"
       },
       {
         "cat": "Perf",
         "severity": "high",
         "fixable": "EXTERNAL",
         "title": "Reduce JavaScript execution time",
-        "pages": "/, /contact/, /history/6th/"
+        "pages": "/, /history/, /history/6th/"
       },
       {
         "cat": "Perf",
         "severity": "high",
         "fixable": "EXTERNAL",
         "title": "Minimize main-thread work",
-        "pages": "/, /history/6th/"
+        "pages": "/, /history/, /history/6th/"
       },
       {
         "cat": "Perf",
@@ -241,7 +248,7 @@
     "latestScores": [
       {
         "name": "/",
-        "performance": 96,
+        "performance": 66,
         "accessibility": 100,
         "bestPractices": 100,
         "seo": 100
@@ -250,12 +257,12 @@
         "name": "/about/",
         "performance": 100,
         "accessibility": 100,
-        "bestPractices": 92,
+        "bestPractices": 100,
         "seo": 100
       },
       {
         "name": "/voices/",
-        "performance": 100,
+        "performance": 81,
         "accessibility": 100,
         "bestPractices": 100,
         "seo": 100
@@ -276,7 +283,7 @@
       },
       {
         "name": "/contact/",
-        "performance": 96,
+        "performance": 78,
         "accessibility": 100,
         "bestPractices": 96,
         "seo": 100
@@ -290,21 +297,21 @@
       },
       {
         "name": "/history/6th/",
-        "performance": 64,
+        "performance": 78,
         "accessibility": 100,
-        "bestPractices": 96,
+        "bestPractices": 92,
         "seo": 100
       },
       {
         "name": "/history/5th/",
-        "performance": 64,
+        "performance": 100,
         "accessibility": 100,
         "bestPractices": 100,
         "seo": 100
       },
       {
         "name": "/history/4th/",
-        "performance": 98,
+        "performance": 100,
         "accessibility": 100,
         "bestPractices": 100,
         "seo": 100
@@ -334,31 +341,31 @@
     "issues": [
       {
         "cat": "Perf",
-        "severity": "good",
+        "severity": "low",
         "fixable": "FIXABLE",
         "title": "Largest Contentful Paint",
-        "pages": "/, /media/, /history/6th/, /history/5th/, /history/2nd/"
+        "pages": "/, /voices/, /history/6th/, /history/4th/, /history/3rd/, /history/2nd/, /history/1st/"
       },
       {
         "cat": "Perf",
-        "severity": "good",
+        "severity": "mid",
         "fixable": "EXTERNAL",
         "title": "Total Blocking Time",
-        "pages": "/, /contact/, /history/6th/, /history/5th/, /history/4th/, /history/3rd/"
+        "pages": "/, /voices/, /contact/, /history/6th/"
       },
       {
         "cat": "Perf",
         "severity": "low",
         "fixable": "FIXABLE",
         "title": "Speed Index",
-        "pages": "/, /about/, /history/6th/, /history/5th/, /history/4th/, /history/3rd/, /history/2nd/"
+        "pages": "/, /voices/, /contact/, /history/6th/, /history/4th/, /history/3rd/"
       },
       {
         "cat": "Perf",
         "severity": "high",
         "fixable": "EXTERNAL",
         "title": "Forced reflow",
-        "pages": "/, /about/, /voices/, /history/6th/, /history/5th/, /history/4th/, /history/3rd/, /history/2nd/, /history/1st/"
+        "pages": "/, /about/, /voices/, /media/, /faqs/, /history/6th/, /history/5th/, /history/4th/, /history/2nd/"
       },
       {
         "cat": "Perf",
@@ -377,30 +384,37 @@
       {
         "cat": "Perf",
         "severity": "low",
+        "fixable": "FIXABLE",
+        "title": "Time to Interactive",
+        "pages": "/, /contact/, /history/6th/"
+      },
+      {
+        "cat": "Perf",
+        "severity": "mid",
         "fixable": "EXTERNAL",
         "title": "Max Potential First Input Delay",
-        "pages": "/, /about/, /contact/, /history/6th/, /history/5th/, /history/4th/, /history/3rd/"
+        "pages": "/, /voices/, /faqs/, /contact/, /history/6th/"
+      },
+      {
+        "cat": "Perf",
+        "severity": "low",
+        "fixable": "EXTERNAL",
+        "title": "Reduce unused JavaScript",
+        "pages": "/, /voices/, /media/, /contact/, /history/6th/, /history/4th/, /history/3rd/, /history/2nd/, /history/1st/"
       },
       {
         "cat": "Perf",
         "severity": "high",
         "fixable": "EXTERNAL",
-        "title": "Reduce unused JavaScript",
-        "pages": "/, /about/, /contact/, /history/6th/, /history/5th/, /history/4th/, /history/3rd/, /history/2nd/, /history/1st/"
+        "title": "Reduce JavaScript execution time",
+        "pages": "/, /contact/"
       },
       {
-        "cat": "BP",
+        "cat": "Perf",
         "severity": "high",
-        "fixable": "FIXABLE",
-        "title": "Browser errors were logged to the console",
-        "pages": "/about/, /contact/"
-      },
-      {
-        "cat": "BP",
-        "severity": "high",
-        "fixable": "FIXABLE",
-        "title": "Issues were logged in the `Issues` panel in Chrome Devtools",
-        "pages": "/about/, /history/6th/"
+        "fixable": "EXTERNAL",
+        "title": "Minimize main-thread work",
+        "pages": "/, /contact/"
       },
       {
         "cat": "Perf",
@@ -411,21 +425,21 @@
       },
       {
         "cat": "Perf",
-        "severity": "good",
+        "severity": "low",
+        "fixable": "EXTERNAL",
+        "title": "Font display",
+        "pages": "/contact/"
+      },
+      {
+        "cat": "BP",
+        "severity": "high",
         "fixable": "FIXABLE",
-        "title": "Time to Interactive",
-        "pages": "/contact/, /history/6th/, /history/5th/, /history/4th/, /history/3rd/"
+        "title": "Browser errors were logged to the console",
+        "pages": "/contact/, /history/6th/"
       },
       {
         "cat": "Perf",
         "severity": "low",
-        "fixable": "EXTERNAL",
-        "title": "Font display",
-        "pages": "/history/6th/"
-      },
-      {
-        "cat": "Perf",
-        "severity": "high",
         "fixable": "FIXABLE",
         "title": "Reduce unused CSS",
         "pages": "/history/6th/"
@@ -438,25 +452,11 @@
         "pages": "/history/6th/"
       },
       {
-        "cat": "Perf",
+        "cat": "BP",
         "severity": "high",
-        "fixable": "EXTERNAL",
-        "title": "Reduce JavaScript execution time",
-        "pages": "/history/6th/, /history/5th/"
-      },
-      {
-        "cat": "Perf",
-        "severity": "high",
-        "fixable": "EXTERNAL",
-        "title": "Minimize main-thread work",
-        "pages": "/history/6th/, /history/5th/"
-      },
-      {
-        "cat": "Perf",
-        "severity": "low",
         "fixable": "FIXABLE",
-        "title": "First Contentful Paint",
-        "pages": "/history/5th/"
+        "title": "Issues were logged in the `Issues` panel in Chrome Devtools",
+        "pages": "/history/6th/"
       },
       {
         "cat": "Perf",
@@ -464,13 +464,6 @@
         "fixable": "FIXABLE",
         "title": "LCP request discovery",
         "pages": "/history/5th/"
-      },
-      {
-        "cat": "Perf",
-        "severity": "high",
-        "fixable": "FIXABLE",
-        "title": "LCP breakdown",
-        "pages": "/history/4th/"
       }
     ]
   },
@@ -543,13 +536,6 @@
   ],
   "history": {
     "mobile": [
-      {
-        "date": "2026-09-15",
-        "performance": 54,
-        "accessibility": 100,
-        "bestPractices": 100,
-        "seo": 100
-      },
       {
         "date": "2026-09-15",
         "performance": 78,
@@ -626,16 +612,16 @@
         "accessibility": 100,
         "bestPractices": 100,
         "seo": 100
-      }
-    ],
-    "desktop": [
+      },
       {
-        "date": "2026-09-15",
-        "performance": 94,
+        "date": "2026-09-23",
+        "performance": 63,
         "accessibility": 100,
         "bestPractices": 100,
         "seo": 100
-      },
+      }
+    ],
+    "desktop": [
       {
         "date": "2026-09-15",
         "performance": 93,
@@ -709,6 +695,13 @@
       {
         "date": "2026-09-22",
         "performance": 96,
+        "accessibility": 100,
+        "bestPractices": 100,
+        "seo": 100
+      },
+      {
+        "date": "2026-09-23",
+        "performance": 66,
         "accessibility": 100,
         "bestPractices": 100,
         "seo": 100
